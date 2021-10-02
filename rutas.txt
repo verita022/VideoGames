@@ -1,0 +1,9 @@
+GET /videogames: listado de videojuegos
+
+GET /videogames?name='' listado de los primeros 15 videojuegos q contengan la palabra ingresada, si no existe, mostrar el mensaje apropiado
+
+GET /videogame/{id} debe traer el detalle del videojuego en particular, solo los datos pedido en la ruta de detalle, incluir generos asociados
+
+GET /genres Obtiene todos los tipos de generos posibles, los trae desde la api y los guarda en la base de datos por primera vez luego usa los de la db
+
+POST /videogame Recibo los datos recolectados en el formulario controlado por body y creo un videojuego en base de datos
