@@ -1,0 +1,79 @@
+body{
+    color: white;
+
+}
+
+
+.select{
+    margin: 2%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+
+.paginado{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+
+.allGames{
+    margin-top: 2%;
+    margin-left: 6%;
+    margin-right: 6%;
+    margin-bottom: 4%;    
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+
+
+.pagButton{
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    
+    background-color: transparent;
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+
+    border-width: 1px;
+    border-color: white;
+    border-radius: 3px;
+        
+    cursor: pointer;
+}
+
+.selectButton{
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    
+    background-color: transparent;
+    padding: 10px;
+    padding-left: 30px;
+    padding-right: 30px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+
+    border-width: 1px;
+    border-color: white;
+    border-radius: 3px;
+        
+    cursor: pointer;
+}
+
+.selectButton  option {
+    font-weight:normal;
+    background-color: black;
+    width: 100%;
+    height: 100%;
+    border-radius: 3px;
+  }

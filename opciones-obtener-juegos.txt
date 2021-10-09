@@ -1,0 +1,42 @@
+
+const VideogamesApi = async () => {
+    const apiUrl = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&number=100`);
+    const result = await apiUrl.data.results.map(el => {
+        return {
+            id: el.id,
+            name: el.name,
+            genres: el.genres.map(el => el),
+            background_image: el.background_image
+
+        }
+    })
+    return result;
+}
+
+
+
+
+
+
+
+const VideogamesApi = async () => {
+    let page = 1; 
+    while(page <= 5){
+        const apiUrl = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=${page}`);
+        console.log(page)
+        const result = await apiUrl.data.results.map(el => {
+            return {
+                id: el.id,
+                name: el.name,
+                genres: el.genres.map(el => el),
+                background_image: el.background_image
+
+            }
+        })
+        page = page + 1;
+        console.log(result)
+    }
+    
+    
+   
+}

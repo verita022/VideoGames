@@ -1,12 +1,12 @@
 const { Router } = require('express');
-const { getAllVidegamesDB, getAllVidegames, getById, postVideogame, putVideoGame, deleteVideogame } = require('../controllers/Videogame')
+const { getDetailById, getAllVidegamesDB, getAllVidegames, postVideogame, putVideoGame, deleteVideogame } = require('../controllers/Videogame')
 const router = Router();
 
 router.get('/db', getAllVidegamesDB )
 
 router.get('/', getAllVidegames)
 
-router.get('/:id', getById)
+router.get('/:id', getDetailById)
 
 router.post('/', postVideogame)
 

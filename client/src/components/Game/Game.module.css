@@ -1,0 +1,33 @@
+.h2{
+    color: white;
+    text-decoration: none;
+}
+a:-webkit-any-link {
+    color: white;
+}
+
+.images{
+    width: 280px;
+    height: 50%;
+    border-radius: 14px 14px 0 0;
+}
+
+.genres{
+    font-weight: 200;
+}
+
+.game{
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    
+    background-color: #0000004d;
+    width: 280px;
+    height: 330px;
+    margin-bottom: 40px;
+
+    border-width: 1px;
+    border-color: white;
+    border-radius: 14px;
+   
+}

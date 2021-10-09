@@ -1,0 +1,35 @@
+
+body {
+    background-color: rgba(0, 0, 0, 0.945);
+    background-image: url('https://static.bandainamcoent.eu/high/elden-ring/elden-ring/00-page-setup/elden-ring-new-header-mobile.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    font-family: "sans-serif";
+} 
+
+.wellcomeButton{
+    color: white;
+    background-color: rgba(65, 74, 82, 0.705);
+    padding: 1%;
+    margin-top: 8%;
+    height: 170px;
+    
+}
+
+.landingButton{
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    
+    background-color: transparent;
+    padding: 16px;
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-top: 40px;
+
+    border-width: 1px;
+    border-color: white;
+    border-radius: 3px;
+        
+    cursor: pointer;
+}

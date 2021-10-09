@@ -2,28 +2,39 @@ const { v4: uuidv4 } = require('uuid');
 const axios = require('axios');
 require('dotenv').config();
 const { API_KEY } = process.env;
-const { Videogame, Gender } = require('../db')
+const { Videogame, Genres } = require('../db')
 const { Sequelize } = require('sequelize');
 
 
-const VideogamesApi = async () => {
-    const apiUrl = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}`);
-    const result = await apiUrl.data.results.map(el => {
-        return {
-            id: el.id,
-            name: el.name,
-            genres: el.genres.map(el => el.name),
-            background_image: el.background_image
 
-        }
-    })
-    return result;
+const VideogamesApi = async () => {
+    let array = []
+
+    for(let i =1; i<=5; i++){
+        const apiUrl = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`);
+        const result = await apiUrl.data.results.map(el => {
+            return {
+                id: el.id,
+                name: el.name,
+                genres: el.genres.map(el => el),
+                background_image: el.background_image,
+                description: el.description,
+                rating: el.rating,
+                platforms: el.platforms
+
+            }
+        })
+        array.push(result);
+    }
+    
+    return array.flat();
+   
 }
 
 const VideogamesDataBase = async () => {
-    return await Videogame.findAll({
+    const resultDB = await Videogame.findAll({
         include: {
-            model: Gender,
+            model: Genres,
             attributes: ['name'],
             through: {
                 attributes: [],
@@ -31,8 +42,41 @@ const VideogamesDataBase = async () => {
         }
 
     });
-
+    
+    return resultDB;  
 }
+
+async function getDetailById(req, res){
+    const { id } = req.params
+       
+    try {
+            if(id.length < 8){
+                const gameDetailUrl =  await axios.get(`https://api.rawg.io/api/games/${id}?key=${API_KEY}`)
+                const apiResults = await gameDetailUrl.data
+                const apiObj = await {
+                    name: apiResults.name,
+                    background_image: apiResults.background_image,
+                    description: apiResults.description,
+                    released: apiResults.released,
+                    rating: apiResults.rating,
+                    platforms: apiResults.platforms.map(el => el.platform.name).join(' , '),
+                    genres: apiResults.genres.map(el => el.name),
+                }
+                return res.send([apiObj])
+            }
+            else{
+                const dbGames = await VideogamesDataBase();
+                const dbFilter = await dbGames.filter(el => el.id == id);
+                            
+                return res.send(dbFilter);
+            }
+        }catch(error){
+            res.json({error})
+        }    
+}
+
+
+
 
 async function getAllVidegamesDB(req, res){
     const { name } = req.query;
@@ -89,7 +133,96 @@ async function getAllVidegames (req, res){
 
 }
 
-async function getById (req, res){
+
+async function postVideogame (req, res){
+    const { name, background_image, description, released, rating, platforms, genres } = req.body;
+    if (!name || !description || !platforms) {
+        return res.status(404).send('Name, description and platforms fields cant be empty')
+    }
+    try {
+        const newGame = await Videogame.create({
+            id: uuidv4(),
+            name: name,
+            background_image: background_image,
+            description: description,
+            released: released,
+            rating: rating,
+            platforms: platforms.join(' , '),
+
+        })
+        if (genres) {
+            const genresDb = await Genres.findAll({
+                where: {
+                    name: genres,
+                },
+
+                attributes: [
+                    'id'
+                ],
+
+            })
+            newGame.addGenres(genresDb)
+        }
+        return res.json(newGame);
+    }
+    catch (error) {
+        res.status(404).json({ error })
+        console.log(error);
+    }
+
+}
+
+async function putVideoGame (req, res){
+    const { id } = req.params
+    const videogame = req.body
+    try {
+        const videoUp = await Videogame.update(videogame, {
+            where: {
+                id,
+            },
+        })
+        return res.sendStatus(200);
+    }
+    catch(error){
+        res.status(404).json({error});
+        console.log(error)
+    }
+
+}
+
+async function deleteVideogame (req, res){
+    let {id} = req.params;
+    try{
+    const videoDestroy = await Videogame.destroy({
+        where: {
+            id,
+        },
+    })
+    res.sendStatus(200);
+    }
+    catch(error){
+        res.status(404).json({error});
+        console.log(error)
+    }
+       
+}
+
+
+module.exports = {
+    getAllVidegamesDB,
+    getAllVidegames,
+    postVideogame,
+    putVideoGame,
+    deleteVideogame,
+    getDetailById
+}
+
+
+
+
+
+
+/* async function getById (req, res){
     const { id } = req.params
     const normId = parseInt(id);
 
@@ -115,87 +248,4 @@ async function getById (req, res){
         console.log(error)
     }
 
-}
-
-async function postVideogame (req, res){
-    const { name, background_image, description, released, rating, platforms, gender } = req.body;
-    if (!name || !description || !platforms) {
-        return res.status(404).send('Name, description and platforms fields cant be empty')
-    }
-    try {
-        const newGame = await Videogame.create({
-            id: uuidv4(),
-            name: name,
-            background_image: background_image,
-            description: description,
-            released: released,
-            rating: rating,
-            platforms: platforms
-
-        })
-        if (gender) {
-            const genderDb = await Gender.findAll({
-                where: {
-                    name: gender,
-                },
-
-                attributes: [
-                    'id'
-                ],
-
-            })
-            newGame.addGender(genderDb)
-        }
-        return res.json(newGame);
-    }
-    catch (error) {
-        send.status(404).json({ error })
-        console.log(error);
-    }
-
-}
-
-async function putVideoGame (req, res){
-    const { id } = req.params
-    const videogame = req.body
-    try {
-        const videoUp = await Videogame.update(videogame, {
-            where: {
-                id,
-            },
-        })
-        return res.sendStatus(200);
-    }
-    catch(error){
-        res.status(404).json({error});
-        console.log(error)
-    }
-
-}
-
-async function deleteVideogame (req, res){
-    const {id} = req.params;
-    try{
-    const videoDestroy = await Videogame.destroy({
-        where: {
-            id,
-        },
-    })
-    res.sendStatus(200);
-    }
-    catch(error){
-        res.status(404).json({error});
-        console.log(error)
-    }
-       
-}
-
-
-module.exports = {
-    getAllVidegamesDB,
-    getAllVidegames,
-    getById,
-    postVideogame,
-    putVideoGame,
-    deleteVideogame
-}
+} */
