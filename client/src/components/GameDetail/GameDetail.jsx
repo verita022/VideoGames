@@ -38,6 +38,9 @@ export default function GameDetail(props){
                     <div className={classes.specificDescription}>
                         <h3>Description:</h3><p className={classes.spanText}>{myGameDetail.map(el => el.description.replace(/<[^>]*>?/g," ") )}</p><br/>
                     </div>
+                    <div>
+                        <h4>Rating :</h4><p className={classes.spanText}>{myGameDetail.map(el => el.rating )}</p><br/>
+                    </div>
                     <div className={classes.subDescription}>
                         <span><h4>Released: </h4><p className={classes.spanText}>{myGameDetail.map(el => el.released )}</p></span><br/>
                         <span><h4>Platforms: </h4><p className={classes.spanText}>{ myGameDetail.map(el => <div>{el.platforms}</div> )}</p></span><br/>

@@ -84,10 +84,10 @@ async function getAllVidegamesDB(req, res){
     if (name) {
         normName = name.toLowerCase()
         const dbFilter = await dbGames.filter(el => el.name.toLowerCase().includes(normName))
-        res.send(dbFilter);
+        res.status(200).send(dbFilter);
     }
     else {
-        res.send(dbGames)
+        res.status(200).send(dbGames)
     }
 }
 
@@ -163,7 +163,7 @@ async function postVideogame (req, res){
             })
             newGame.addGenres(genresDb)
         }
-        return res.json(newGame);
+        return res.status(200).json(newGame);
     }
     catch (error) {
         res.status(404).json({ error })
