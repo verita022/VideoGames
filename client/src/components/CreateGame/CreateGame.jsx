@@ -2,9 +2,11 @@ import React from 'react';
 import { useState, useEffect } from "react"
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { getGenres, createGame } from '../../actions';
+import { getGenres, createGame, getAllGames } from '../../actions';
+import swal from 'sweetalert';
 import classes from './CreateGame.module.css';
 import NavBar from '../NavBar/NavBar';
+
 
 
 function validate(input){
@@ -75,19 +77,24 @@ export default function CreateGame(){
 
     function handleSubmit(e){
         e.preventDefault()
-        dispatch(createGame(input))
-            alert('Game Succesfully Created!')
-            setInput({
-                name:'',
-                background_image: '',
-                description: '',
-                released: '',
-                rating: '',
-                platforms: [],
-                genres: []
-            })
-            history.push('/Home')
-           
+        if(!input.name || !input.description || !input.platforms){
+          return swal('Name, Description and Platform fields cant be empty')
+        }
+        else{
+            dispatch(getAllGames())
+            dispatch(createGame(input))
+            swal('Game Succesfully Created!')
+                setInput({
+                    name:'',
+                    background_image: '',
+                    description: '',
+                    released: '',
+                    rating: '',
+                    platforms: [],
+                    genres: []
+                })
+                history.push('/Home')
+        }   
        
     }
 
@@ -119,14 +126,14 @@ export default function CreateGame(){
                 <div className={classes.descConteiner}>
                     <div>
                         <label >Name: <input className={classes.inputButton} onChange={handleChange} type='text' value={input.name} name='name'/>
-                        {error.name && <p>{error.name}</p>}</label>                   
+                        <p className={error.name && classes.danger}>{error.name}</p></label>                   
                     </div>
                     <div>
                         <label >Image: <input className={classes.inputButton} onChange={handleChange} type='text' value={input.background_image} name='background_image'/></label>                   
                     </div>
                     <div>
                         <label >Description: <input className={classes.inputButton} style={{ height: '60px' }} onChange={handleChange} type='text' value={input.description} name='description'/>
-                        {error.description && <p>{error.description}</p>}</label>                    
+                        <p className={error.description && classes.danger}>{error.description}</p></label>                    
                     </div>
                     <div>
                         <label >Released: <input className={classes.inputButton} onChange={handleChange} type='text' value={input.released} name='released'/></label>
@@ -135,17 +142,18 @@ export default function CreateGame(){
                         <label >Rating: <input className={classes.inputButton} onChange={handleChange} type='number' value={input.rating} name='rating'/></label>                   
                     </div>
                     <div>
-                        <label >Platforms: <select className={classes.inputButton} onChange={handleSelectPlatforms}>
+                        <label >Platforms: <select className={classes.inputButton} onChange={handleSelectPlatforms} name='platforms'><option></option>
                             {platformsArray.map((el) => (<option  key={el[el.length - 3] + el.charCodeAt() + el[el.length - 1]} value={el}>{el}</option>))}
-                        </select>                    
-                        {input.platforms.map(el => <div><button onClick={() => handleDeletePlatform(el)}>x</button><p>{el}</p></div>)}
-                        {error.platforms && <p>{error.platforms}</p>} </label>                              
+                        </select>
+                        <p className={error.platforms && classes.danger}>{error.platforms}</p></label>                    
+                        <div className={classes.selection}>{input.platforms.map((el, index) => <div key={index}><button onClick={() => handleDeletePlatform(el)}>x</button><p>{el}</p></div>)}</div>
+                                                      
                     </div>
                     <div>
-                        <label>Genres: <select className={classes.inputButton} onChange={handleSelectGenre}>
+                        <label>Genres: <select className={classes.inputButton} onChange={handleSelectGenre}><option></option>
                             {genres.map((el) => (<option key={el.id} value={el.name}>{el}</option>))}
                         </select>
-                        {input.genres.map(el => <div><button onClick={() => handleDeleteGenre(el)}>x</button><p>{el}</p></div> )}</label>                  
+                        <div className={classes.selection}>{input.genres.map((el, index) => <div key={index}><button onClick={() => handleDeleteGenre(el)}>x</button><p>{el}</p></div> )}</div></label>                  
                     </div>
                     <button className={classes.createButton} style={{ width: '240px' }} type='submit'>Create Game</button>
                  </div>

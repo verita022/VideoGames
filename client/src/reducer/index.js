@@ -46,6 +46,12 @@ export default function rootReducer(state =initialState, action){
                 videoGames: action.payload
             }
             
+        case 'DELETE_GAME':
+            
+        return {
+            ...state,
+           
+        }
 
         case 'GET_SOME_GAMES':
         let allGamesMix = state.allGames.flat();

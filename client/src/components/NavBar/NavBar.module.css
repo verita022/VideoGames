@@ -29,6 +29,9 @@
     cursor: pointer;
 }
 
+.homeButton:hover{
+    background-color:rgba(138, 138, 121, 0.356); 
+}
 
 .searchBar{
     display: flex;
@@ -72,3 +75,8 @@
         
     cursor: pointer;
   }
+
+.searchButton:hover{
+    background-color:rgba(138, 138, 121, 0.356); 
+    
+}

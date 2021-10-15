@@ -31,3 +31,7 @@ a:-webkit-any-link {
     border-radius: 14px;
    
 }
+
+.game:hover {
+    background-color: rgba(77, 58, 22, 0.198);
+}

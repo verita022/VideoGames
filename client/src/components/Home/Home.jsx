@@ -2,6 +2,8 @@ import React from "react";
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector } from 'react-redux';
 import { getAllGames, filterByGenre, orderByRating, orderAlphabetically, getFromDBorApi, emptyDetails } from "../../actions";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faRedo } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import Game from '../Game/Game'
 import Paginado from "./paginado";
@@ -17,7 +19,7 @@ export default function Home(){
         if(allGames.length < 1){
             dispatch(getAllGames())
         }
-    }, [dispatch]);
+    }, [dispatch, allGames.length]);
 
     useEffect(()=>{
         dispatch(emptyDetails())
@@ -37,7 +39,9 @@ export default function Home(){
     function handleOrderAlphabetically(e){
         dispatch(orderAlphabetically(e.target.value))
     }
-
+    function rechargeHome(){
+        dispatch(getAllGames());
+    }
     
 
     //Logica del Paginado
@@ -51,6 +55,8 @@ export default function Home(){
     const paginado = (pageNumber) =>{
           setCurrentPage(pageNumber);
       }  
+    
+       
     //Fin del paginado
 
 
@@ -59,9 +65,8 @@ export default function Home(){
         <div>
             <NavBar/>
             
-            {/* <h2>What kind of game are you looking for...?</h2> */}
-            <div className={classes.select}>
             
+            <div className={classes.select}>
                 <select className={classes.selectButton} onChange={e => handleOrderByRating(e)}>
                     <option>Order By Rating</option>
                     <option value='masRating'>+ Rating</option>
@@ -100,12 +105,15 @@ export default function Home(){
                     <option value='Educational'>Educational</option>
                     <option value='Card'>Card</option>
                 </select>
+                <button onClick={rechargeHome} className={classes.recharge}><FontAwesomeIcon icon={faRedo}/></button>
             </div>
             <div className={classes.allGames}>               
-                {currentGames?.flat().map((el) => <Game name={<Link to={'/Home/' + el.id } style={{ textDecoration: 'none' }}>{el.name} </Link>} key={el.id} image={el.background_image} gender={el.genres.map(el => <div>{el.name}</div> )}/>)}
+                {currentGames.length > 0 ? currentGames?.flat().map((el) => <Link to={'/Home/' + el.id } key={el.id} style={{ textDecoration: 'none' }}>
+                    <Game name={el.name} image={el.background_image} gender={el.genres.sort((a, b) => {return a - b}).map((el, index) => <div key={index}>{el.name}</div>) }/>
+                    </Link> )  :  <div className={classes.notFound} ><h2>Nothing around here </h2></div> }
             </div>
             <div>
-                {<Paginado gamesPerPage={gamesPerPage} allGames={allGames.length} paginado={paginado}/>}
+                {<Paginado gamesPerPage={gamesPerPage} allGames={allGames.length} paginado={paginado}/> }
             </div> 
         </div>
     )

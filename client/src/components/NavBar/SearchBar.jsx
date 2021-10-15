@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { searchGamesByName } from '../../actions'
 import classes from './NavBar.module.css'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 
 export default function SearchByName(){
@@ -36,14 +38,16 @@ export default function SearchByName(){
         }
      }
    
-
+  
     return(
         <div>
             <div className={classes.searchBar}>
-            <input className={classes.seachInput} type="text" value={name} placeholder='Search...'  onChange={ e => handleNameChange(e)}></input>
-            <button className={classes.searchButton} type='submit' onClick={handleSubmit}>Search</button>
+            <input id='inputText' className={classes.seachInput} type="text" value={name} placeholder='Search...'  onChange={ e => handleNameChange(e)}></input>
+            <button id='butText' className={classes.searchButton} type='submit' onClick={handleSubmit}><FontAwesomeIcon icon={faSearch}/></button>
             </div>
             
         </div>
     )
 }
+
+

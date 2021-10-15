@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './Home.module.css';
 
 
+
 export default function Paginado({gamesPerPage, allGames, paginado}){
     const pageNumbers = [];
 
@@ -10,12 +11,11 @@ export default function Paginado({gamesPerPage, allGames, paginado}){
     }
     return(
         <div className={classes.paginado}>
-            
                 {pageNumbers && pageNumbers.map(
-                   number => {return <ul key={number}><button className={classes.pagButton} onClick={() =>{paginado(number)}}>{number}</button></ul>}
+                   number => {return <ul key={number}><button className={classes.pagButton} onClick={() =>paginado(number)}>{number}</button></ul>}
                 )}
-            
         </div>
     )
     
 }
+

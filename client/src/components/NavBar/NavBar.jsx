@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux'
 import { getAllGames } from '../../actions'
 import classes from './NavBar.module.css';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faGamepad } from '@fortawesome/free-solid-svg-icons';
 
 export default function NavBar(props){
 console.log()
@@ -20,11 +22,11 @@ console.log()
 
     return(
         <div className={classes.navBar}>
-            <button className={classes.homeButton} onClick={recharge} ><Link to='/Home' style={{ textDecoration: 'none' }}>Home</Link></button>
+            <Link to='/Home' style={{ textDecoration: 'none' }}><button className={classes.homeButton} onClick={recharge} >Home  <FontAwesomeIcon icon={faGamepad} style={{ color: 'aqua', fontSize: '20px' }}/></button></Link>
             <div><SearchBar/></div>
-            <button className={classes.homeButton}><Link to='/createGame' style={{ textDecoration: 'none' }} >
+            <Link to='/createGame' style={{ textDecoration: 'none' }} ><button className={classes.homeButton}>
                 Create your Game
-            </Link></button>
+            </button></Link>
 
         </div>
     ) 

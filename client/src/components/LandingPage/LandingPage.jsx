@@ -4,6 +4,8 @@ import { getAllGames } from "../../actions";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import classes from './LandingPage.module.css'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faGamepad } from '@fortawesome/free-solid-svg-icons';
 
 export default function LandingPage(){
 
@@ -15,7 +17,7 @@ export default function LandingPage(){
 
     return (
         <div className={classes.wellcomeButton}>
-            <h1>Your video games portal</h1>
+            <h1>Your video games portal  <FontAwesomeIcon icon={faGamepad} style={{ color: 'aqua', fontSize: '30px' }}/></h1>
             <Link to='/Home'>
                 <button className={classes.landingButton}>START</button>
             </Link>

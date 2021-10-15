@@ -70,6 +70,22 @@ export function searchGamesByName(name){
     }
 }
 
+export function deleteGame(id){
+    return async function(dispatch){
+        try{
+            const deleteG = await axios.delete('http://localhost:3001/videogames/' + id)
+            return dispatch({
+                type: 'DELETE_GAME',
+                payload: deleteG.data
+            })
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+}
+
+
 export function emptyDetails(){
  return ({
      type: 'EMPTY_DETAILS',
@@ -107,3 +123,4 @@ export function orderAlphabetically(payload){
         payload
     })
 }
+

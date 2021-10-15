@@ -67,7 +67,20 @@
     cursor: pointer;
 }
 
+.createButton:hover{
+    background-color:rgba(138, 138, 121, 0.356); 
+}
 
 .descConteiner{
    width: 250px;         
+}
+
+.danger{
+    color: rgb(139, 8, 8);
+}
+
+.selection{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }

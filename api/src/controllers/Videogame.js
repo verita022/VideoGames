@@ -6,11 +6,16 @@ const { Videogame, Genres } = require('../db')
 const { Sequelize } = require('sequelize');
 
 
+//&page_size=50&page=1    
+
 
 const VideogamesApi = async () => {
-    let array = []
+    /* let array = []
 
-    for(let i =1; i<=5; i++){
+    let i = 0;
+
+    while(i< 5){
+        i = i + 1;
         const apiUrl = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`);
         const result = await apiUrl.data.results.map(el => {
             return {
@@ -23,11 +28,41 @@ const VideogamesApi = async () => {
                 platforms: el.platforms
 
             }
-        })
+        }) 
         array.push(result);
     }
+
+    /* for(let i =1; i<=5; i++){
+        const apiUrl = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`);
+        const result = await apiUrl.data.results.map(el => {
+            return {
+                id: el.id,
+                name: el.name,
+                genres: el.genres.map(el => el),
+                background_image: el.background_image,
+                description: el.description,
+                rating: el.rating,
+                platforms: el.platforms
+
+            }
+        }) 
+        array.push(result);
+        */
+        const apiUrl = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page_size=50&page=1`);
+        const result = await apiUrl.data.results.map(el => {
+            return {
+                id: el.id,
+                name: el.name,
+                genres: el.genres.map(el => el),
+                background_image: el.background_image,
+                description: el.description,
+                rating: el.rating,
+                platforms: el.platforms
+
+            }
+        }) 
     
-    return array.flat();
+    return result.flat();
    
 }
 
@@ -43,7 +78,7 @@ const VideogamesDataBase = async () => {
 
     });
     
-    return resultDB;  
+    return resultDB.reverse();  
 }
 
 async function getDetailById(req, res){
