@@ -33,7 +33,7 @@
 - [ ] Express
 - [ ] Sequelize - Postgres
 
-#### Frontend
+## Frontend
 
 Aplicación de React/Redux que contiene las siguientes pantallas/rutas.
 
@@ -69,7 +69,7 @@ __Ruta de creación de videojuegos__:
 - [ ] Posibilidad de seleccionar/agregar varias plataformas
 - [ ] Botón/Opción para crear un nuevo videojuego
 
-#### Base de datos
+## Base de datos
 
 El modelo de la base de datos contiene las entidades (Aquellas propiedades marcadas con asterísco son obligatorias):
 
@@ -87,7 +87,7 @@ El modelo de la base de datos contiene las entidades (Aquellas propiedades marca
 La relación entre ambas entidades es de muchos a muchos.
 
 
-#### Backend
+## Backend
 
 Servidor en Node/Express con las siguientes rutas:
 
