@@ -10,7 +10,7 @@ const { Sequelize } = require('sequelize');
 
 
 const VideogamesApi = async () => {
-    /* let array = []
+    let array = []
 
     let i = 0;
 
@@ -31,8 +31,9 @@ const VideogamesApi = async () => {
         }) 
         array.push(result);
     }
+    return array;
 
-    /* for(let i =1; i<=5; i++){
+     /*for(let i =1; i<=5; i++){
         const apiUrl = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page=${i}`);
         const result = await apiUrl.data.results.map(el => {
             return {
@@ -46,9 +47,10 @@ const VideogamesApi = async () => {
 
             }
         }) 
-        array.push(result);
-        */
-        const apiUrl = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page_size=50&page=1`);
+        array.push(result);*/
+       
+       
+    /*const apiUrl = await axios.get(`https://api.rawg.io/api/games?key=${API_KEY}&page_size=50&page=1`);
         const result = await apiUrl.data.results.map(el => {
             return {
                 id: el.id,
@@ -61,10 +63,10 @@ const VideogamesApi = async () => {
 
             }
         }) 
-    
+    console.log("result" + result)
     return result.length > 1 ? result.flat() : result;
    
-}
+}*/
 
 const VideogamesDataBase = async () => {
     const resultDB = await Videogame.findAll({
