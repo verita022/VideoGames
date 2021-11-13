@@ -61,7 +61,7 @@ const VideogamesApi = async () => {
 
             }
         }) 
-    
+    console.log("result" + result)
     return result;
    
 }
