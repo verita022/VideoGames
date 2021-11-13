@@ -19,13 +19,7 @@ server.use(express.urlencoded({ extended: true, limit: '50mb' }));
 server.use(express.json({ limit: '50mb' }));
 server.use(cookieParser());
 server.use(morgan('dev'));
-server.all('/*', function(req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*'); // deberia ir url de produccion
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-  next();
-});
+server.options('*', cors());
 
 server.use(express.json())
 server.use('/', routes);
