@@ -62,7 +62,7 @@ const VideogamesApi = async () => {
             }
         }) 
     
-    return result.flat();
+    return result.length > 1 ? result.flat() : result;
    
 }
 
